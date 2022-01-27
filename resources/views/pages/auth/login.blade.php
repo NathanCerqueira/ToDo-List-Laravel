@@ -61,9 +61,12 @@
 	span a{
 		text-decoration: none;
 		font-weight: bold;
+		color: black;
 	}
 
 </style>
+
+@section('title-page', 'Login')
 
 @section('content')
 		<form action="{{ route('auth.login') }}" method="post">
