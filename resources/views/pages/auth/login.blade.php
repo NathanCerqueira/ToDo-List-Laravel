@@ -51,6 +51,7 @@
 		font-size: 20px;
 		border-radius: 3px;
 		font-weight: bold;
+		cursor: pointer;
 	}
 
 	span{
@@ -64,17 +65,39 @@
 		color: black;
 	}
 
+	span .error{
+		font-weight: bold;
+		color: red;
+	}
+
 </style>
 
 @section('title-page', 'Login')
 
 @section('content')
+
 		<form action="{{ route('auth.login') }}" method="post">
 			<h2>Login</h2>
+			@error('error')
+				<span class="error">{{ $message }}</span>
+			@enderror
+
 			@csrf
-			<input type="email" name="email" placeholder="Email">
+
+			<input type="email" name="email" placeholder="Email" 
+			value="{{
+				Session::has('email') ? Session::get('email') : ''
+			}}">
+			@error('email')
+				<span class="error">{{ $message }}</span>
+			@enderror
+
 			<input type="password" name="password" placeholder="Senha">
+			@error('password')
+				<span class="error">{{ $message }}</span>
+			@enderror
+
 			<button type="submit">Entrar</button>
-			<span><a href="">Crie uma conta!</a></span>
+			<span>Não tem conta?<a href="{{ route('app.createAccount') }}"> Cadastre-se</a></span>
 		</form>
 @endsection
